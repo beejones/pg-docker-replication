@@ -1,0 +1,28 @@
+version: "3"
+services:
+  pg_primary:
+    build: 
+      context: ./
+      dockerfile: Dockerfile-primary
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PG_REP_USER=rep
+      - PG_REP_PASSWORD=postgres
+
+  pg_standby:
+    build: 
+      context: ./
+      dockerfile: Dockerfile-standby
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PG_REP_USER=rep
+      - PG_REP_PASSWORD=postgres
+volumes:
+  pg_data:
