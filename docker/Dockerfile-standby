@@ -4,5 +4,8 @@ RUN set -ex && apk --no-cache add sudo
 RUN apk add --update iputils
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 RUN sudo chmod +x /docker-entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["postgres", "postgres"]
+COPY ./init-user-db.sh /docker-entrypoint-initdb.d/init-user-db.sh
+RUN chmod 0666 /docker-entrypoint-initdb.d/init-user-db.sh
+
+#ENTRYPOINT ["/docker-entrypoint.sh"]
+#CMD ["/docker-entrypoint.sh", "postgres", "postgres"]
