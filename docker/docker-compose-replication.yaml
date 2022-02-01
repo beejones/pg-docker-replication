@@ -13,7 +13,10 @@ services:
       - POSTGRES_DB=postgres
       - PG_REP_USER=rep
       - PG_REP_PASSWORD=postgres
-
+#    networks:
+#      default:
+#      aliases:
+#        - pg_primary
   pg_standby:
     build: 
       context: ./
@@ -24,5 +27,9 @@ services:
       - POSTGRES_DB=postgres
       - PG_REP_USER=rep
       - PG_REP_PASSWORD=postgres
+#    networks:
+#      default:
+#      aliases:
+#        - pg_standby
 volumes:
   pg_data:

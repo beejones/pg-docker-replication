@@ -17,11 +17,7 @@ docker-compose -f docker/single-pg.yaml stop
 ```
 # Create primary and standby containers
 
-Remove any cached builds:
+Remove any cached builds and build new containers
 ```
-docker builder prune
-```
-
-```
-docker-compose -f docker/docker-replication.yaml up --build
+docker builder prune -f && docker-compose -f docker/docker-compose-replication.yaml up --build
 ```
