@@ -3,7 +3,7 @@ services:
   pg_primary:
     build: 
       context: ./
-      dockerfile: Dockerfile-primary
+      dockerfile: primary.dockerfile
     volumes:
       - pg_data:/var/lib/postgresql/data
     
@@ -18,9 +18,10 @@ services:
 #      aliases:
 #        - pg_primary
   pg_standby:
+    #container_name: pg_standby
     build: 
       context: ./
-      dockerfile: Dockerfile-standby
+      dockerfile: standby.dockerfile
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres

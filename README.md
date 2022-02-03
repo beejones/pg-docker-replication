@@ -1,6 +1,9 @@
 # pg-docker-replication
 Create a docker setup with multiple servers which replicate
 
+In vscode it is advisable to install the Microsoft Docker extension: ms-azuretools.vscode-docker
+
+
 # Create a single postgres container
 
 Install the postgres client, run the container and connect the client.
@@ -13,11 +16,11 @@ PGPASSWORD=postgres psql -U postgres -h 0.0.0.0
 
 Stopping the container
 ```bash
-docker-compose -f docker/single-pg.yaml stop
+docker-compose -f docker/single-pg.yaml down
 ```
 # Create primary and standby containers
 
-Remove any cached builds and build new containers
+Remove any cached builds, build and run new containers
 ```
 docker builder prune -f && docker-compose -f docker/docker-compose-replication.yaml up --build
 ```
@@ -31,5 +34,5 @@ docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}
 Connect client (IP address can be different for your containers). 
 ```
 sudo apt install postgresql-client -y
-PGPASSWORD=postgres psql -U postgres -h 172.21.0.2
+PGPASSWORD=postgres psql -U postgres -h 172.22.0.2
 ```

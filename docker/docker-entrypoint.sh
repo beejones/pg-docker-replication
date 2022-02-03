@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Start docker-entrypoint"
 export DOCKER_PRIMARY=docker_pg_primary_1
 if [ ! -s "$PGDATA/PG_VERSION" ]; then
 echo "*:*:*:$PG_REP_USER:$PG_REP_PASSWORD" > ~/.pgpass
@@ -24,4 +25,5 @@ chown postgres. ${PGDATA} -R
 chmod 700 ${PGDATA} -R
 fi
 sed -i 's/wal_level = hot_standby/wal_level = replica/g' ${PGDATA}/postgresql.conf
-exec "$@"
+#exec "$@"
+#runuser -c "$@" -l postgres 
