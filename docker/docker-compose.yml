@@ -2,12 +2,15 @@ version: '2'
 
 services:
   postgresql-primary:
-    container_name: postgresql-primary
-    image: 'bitnami/postgresql:latest'
+    #container_name: postgresql-primary
+    build: 
+      context: ./
+      dockerfile: primary.dockerfile
     ports:
       - '5432'
     volumes:
       - 'postgresql_primary_data:/bitnami/postgresql'
+     #- './primary/conf:/opt/bitnami/postgresql/conf:Z'
     environment:
       - POSTGRESQL_REPLICATION_MODE=master
       - POSTGRESQL_REPLICATION_USER=repl_user
@@ -31,3 +34,4 @@ services:
 
 volumes:
   postgresql_primary_data:
+    
