@@ -20,19 +20,35 @@ docker-compose -f docker/single-pg.yaml down
 ```
 # Create primary and standby containers
 
-Remove any cached builds, build and run new containers
+Based on https://hub.docker.com/r/bitnami/postgresql
+
+Start containers
 ```
-docker builder prune -f && docker-compose -f docker/docker-compose-replication.yaml up --build
+cd docker
+docker-compose up  --scale postgresql-primary=1 --scale postgresql-replica=1
 ```
+
+Stop containers
+```
+docker-compose down
+```
+
 
 Inspect IP Address of standby and primary
 ```
-docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker_pg_standby_1
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker_pg_replica_1
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker_pg_primary_1
 ```
 
 Connect client (IP address can be different for your containers). 
+
 ```
 sudo apt install postgresql-client -y
-PGPASSWORD=postgres psql -U postgres -h 172.22.0.2
+Connect to postgres
+PGUSER=my_user PGPASSWORD=my_password  psql --user my_user -d my_database -h 172.18.0.2
+```
+
+Connect to primary container
+```
+docker exec -it docker_postgresql-primary_1 bash
 ```
