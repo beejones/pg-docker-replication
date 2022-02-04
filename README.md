@@ -22,6 +22,16 @@ docker-compose -f docker/single-pg.yaml down
 
 Based on https://hub.docker.com/r/bitnami/postgresql
 
+Prepare volumes
+
+```
+mkdir -p primary
+mkdir -p primary/data
+mkdir -p primary/conf
+sudo chown 999:999 primary
+sudo chown 999:999 primary/data/
+sudo chown 999:999 primary/conf/
+
 Start containers
 ```
 cd docker
@@ -36,8 +46,8 @@ docker-compose down
 
 Inspect IP Address of standby and primary
 ```
-docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker_pg_replica_1
-docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker_pg_primary_1
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker_postgresql-replica_1
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker_postgresql-primary_1
 ```
 
 Connect client (IP address can be different for your containers). 
